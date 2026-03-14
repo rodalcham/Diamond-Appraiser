@@ -104,7 +104,7 @@ df = load_data()
 theta, r2, rmse = train_model(df)
 
 #  Header 
-st.markdown('<p class="title">💎 Diamond Appraiser</p>', unsafe_allow_html=True)
+st.markdown('<p style="font-family: \'Playfair Display\', serif; font-size: 3.5rem; color: #e8d5a3; letter-spacing: 0.02em; margin-bottom: 0;">💎 Diamond Appraiser</p>', unsafe_allow_html=True)
 st.markdown('<p class="subtitle">Estimate the market value of a diamond using a linear regression model</p>', unsafe_allow_html=True)
 
 #  Appraiser Form 
