@@ -157,7 +157,7 @@ else:
     for cat, col in zip(categories, colors):
         subset = df[df[filter_by] == cat]['price']
         ax.hist(subset, bins=50, alpha=0.6, label=str(cat), color=col, edgecolor='none')
-    ax.legend(facecolor="#69d411", edgecolor='#333', labelcolor='#f0ece4', fontsize=8)
+    ax.legend(facecolor="#f4f6d0", edgecolor='#333', labelcolor='#f0ece4', fontsize=8)
 
 ax.set_xlabel('Price (USD)', color='#888', fontsize=10)
 ax.set_ylabel('Count', color='#888', fontsize=10)
