@@ -20,7 +20,7 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; }
 
 .title {
     font-family: 'Playfair Display', serif;
-    font-size: 10.0rem;
+    font-size: 3.5rem;
     color: #e8d5a3;
     letter-spacing: 0.02em;
     margin-bottom: 0;
