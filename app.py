@@ -32,8 +32,8 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; }
     margin-bottom: 2rem;
 }
 .price-box {
-    background: linear-gradient(135deg, #1a1a1a, #222);
-    border: 1px solid #e8d5a3;
+    background: linear-gradient(135deg, #f5f0e8, #fffdf7);
+    border: 1px solid #c9a84c;
     border-radius: 12px;
     padding: 2rem;
     text-align: center;
@@ -48,12 +48,12 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; }
 .price-value {
     font-family: 'Playfair Display', serif;
     font-size: 3rem;
-    color: #e8d5a3;
+    color: #b8860b;
     margin: 0.3rem 0;
 }
 .divider {
     border: none;
-    border-top: 1px solid #2a2a2a;
+    border-top: 1px solid #cccccc;
     margin: 2.5rem 0;
 }
 </style>
