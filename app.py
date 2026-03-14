@@ -160,9 +160,8 @@ if filter_by == 'None':
 else:
     categories = df[filter_by].cat.categories
     colors = CATEGORY_COLORS[filter_by]
-    for cat, col in zip(categories, colors):
-        subset = df[df[filter_by] == cat]['price']
-        ax.hist(subset, bins=50, alpha=0.75, label=str(cat), color=col, edgecolor='white', linewidth=0.4)
+    subsets = [df[df[filter_by] == cat]['price'].values for cat in categories]
+    ax.hist(subsets, bins=50, stacked=True, label=[str(c) for c in categories], color=colors, edgecolor='white', linewidth=0.4)
     ax.legend(facecolor='#ffffff', edgecolor='#cccccc', labelcolor='#333333', fontsize=8)
 
 ax.set_xlabel('Price (USD)', color='#333333', fontsize=10)
