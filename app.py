@@ -4,7 +4,7 @@ import seaborn as sns
 import numpy as np
 import matplotlib.pyplot as plt
 
-# ── Page config ────────────────────────────────────────────────────────────────
+#  Page config 
 st.set_page_config(page_title="Diamond Appraiser", page_icon="💎", layout="centered")
 
 st.markdown("""
@@ -59,7 +59,7 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; }
 </style>
 """, unsafe_allow_html=True)
 
-# ── Load & prepare data ────────────────────────────────────────────────────────
+#  Load & prepare data 
 @st.cache_data
 def load_data():
     df = sns.load_dataset('diamonds')
@@ -103,11 +103,11 @@ def train_model(df):
 df = load_data()
 theta, r2, rmse = train_model(df)
 
-# ── Header ─────────────────────────────────────────────────────────────────────
+#  Header 
 st.markdown('<p class="title">💎 Diamond Appraiser</p>', unsafe_allow_html=True)
 st.markdown('<p class="subtitle">Estimate the market value of a diamond using a linear regression model</p>', unsafe_allow_html=True)
 
-# ── Appraiser Form ─────────────────────────────────────────────────────────────
+#  Appraiser Form 
 st.markdown("### Appraise a Diamond")
 
 col1, col2 = st.columns(2)
@@ -137,16 +137,16 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-# ── Divider ────────────────────────────────────────────────────────────────────
+#  Divider 
 st.markdown('<hr class="divider">', unsafe_allow_html=True)
 
-# ── Histogram ─────────────────────────────────────────────────────────────────
+#  Histogram 
 st.markdown("### Price Distribution")
 
 filter_by = st.selectbox("Filter histogram by", ['None', 'cut', 'color', 'clarity'])
 
 fig, ax = plt.subplots(figsize=(10, 4))
-fig.patch.set_facecolor('#0e0e0e')
+fig.patch.set_facecolor("#e37f7f")
 ax.set_facecolor('#141414')
 
 if filter_by == 'None':
