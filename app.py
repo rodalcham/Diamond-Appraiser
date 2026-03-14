@@ -150,14 +150,14 @@ fig.patch.set_facecolor("#e0e0e0")
 ax.set_facecolor("#EAEAEA")
 
 if filter_by == 'None':
-    ax.hist(df['price'], bins=50, color="#3bff05", edgecolor='#0e0e0e', linewidth=0.4)
+    ax.hist(df['price'], bins=50, color='#e8d5a3', edgecolor='#0e0e0e', linewidth=0.4)
 else:
     categories = df[filter_by].cat.categories
     colors = plt.cm.YlOrBr(np.linspace(0.2, 0.9, len(categories)))
     for cat, col in zip(categories, colors):
         subset = df[df[filter_by] == cat]['price']
         ax.hist(subset, bins=50, alpha=0.6, label=str(cat), color=col, edgecolor='none')
-    ax.legend(facecolor='#1a1a1a', edgecolor='#333', labelcolor='#f0ece4', fontsize=8)
+    ax.legend(facecolor="#69d411", edgecolor='#333', labelcolor='#f0ece4', fontsize=8)
 
 ax.set_xlabel('Price (USD)', color='#888', fontsize=10)
 ax.set_ylabel('Count', color='#888', fontsize=10)
