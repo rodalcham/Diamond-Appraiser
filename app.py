@@ -150,7 +150,7 @@ fig.patch.set_facecolor("#e0e0e0")
 ax.set_facecolor("#EAEAEA")
 
 if filter_by == 'None':
-    ax.hist(df['price'], bins=50, color='#e8d5a3', edgecolor='#0e0e0e', linewidth=0.4)
+    ax.hist(df['price'], bins=50, color='e0e0e0', edgecolor='#0e0e0e', linewidth=0.4)
 else:
     categories = df[filter_by].cat.categories
     colors = plt.cm.YlOrBr(np.linspace(0.2, 0.9, len(categories)))
