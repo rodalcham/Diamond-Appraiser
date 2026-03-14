@@ -146,8 +146,8 @@ st.markdown("### Price Distribution")
 filter_by = st.selectbox("Filter histogram by", ['None', 'cut', 'color', 'clarity'])
 
 fig, ax = plt.subplots(figsize=(10, 4))
-fig.patch.set_facecolor("#e37f7f")
-ax.set_facecolor('#141414')
+fig.patch.set_facecolor("#e0e0e0")
+ax.set_facecolor("#EAEAEA")
 
 if filter_by == 'None':
     ax.hist(df['price'], bins=50, color='#e8d5a3', edgecolor='#0e0e0e', linewidth=0.4)
