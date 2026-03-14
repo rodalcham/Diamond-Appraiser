@@ -126,7 +126,7 @@ color_code   = ['J', 'I', 'H', 'G', 'F', 'E', 'D'].index(color)
 clarity_code = ['I1', 'SI2', 'SI1', 'VS2', 'VS1', 'VVS2', 'VVS1', 'IF'].index(clarity)
 
 x_input = np.array([[1, carat, cut_code, color_code, clarity_code]])
-predicted_price = float(x_input @ theta)
+predicted_price = float((x_input @ theta)[0][0])
 predicted_price = max(0, predicted_price)
 
 st.markdown(f"""
