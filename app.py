@@ -73,7 +73,7 @@ def load_data():
     return df
 
 @st.cache_data #Makes the function run only once
-def train_model(df):
+def train_model(df): # As a possible future improvement, we could use log-linear regression for better results, the current version gives negative values for small numbers.
     df_model = df.copy()
     df_model['cut']     = df_model['cut'].cat.codes # We convert categoricals into numbers 
     df_model['color']   = df_model['color'].cat.codes
