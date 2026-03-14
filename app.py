@@ -60,14 +60,14 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; }
 """, unsafe_allow_html=True)
 
 #  Load & prepare data 
-@st.cache_data
+@st.cache_data # Makes the function run only once
 def load_data():
     df = sns.load_dataset('diamonds') #We take the Data from seaborn because the link didn't work
     df = df[['carat', 'cut', 'color', 'clarity', 'price']]
-    df = df.dropna() 
+    df = df.dropna() # We get rid of empty or impossible values
     df = df[df['price'] > 0]
-    df = df[df['carat'] > 0]
-    df['cut']     = pd.Categorical(df['cut'],     categories=['Fair','Good','Very Good','Premium','Ideal'], ordered=True)
+    df = df[df['carat'] > 0] 
+    df['cut']     = pd.Categorical(df['cut'],     categories=['Fair','Good','Very Good','Premium','Ideal'], ordered=True) # We order the categories, to improve results
     df['color']   = pd.Categorical(df['color'],   categories=['J','I','H','G','F','E','D'], ordered=True)
     df['clarity'] = pd.Categorical(df['clarity'], categories=['I1','SI2','SI1','VS2','VS1','VVS2','VVS1','IF'], ordered=True)
     return df
@@ -75,24 +75,24 @@ def load_data():
 @st.cache_data #Makes the function run only once
 def train_model(df):
     df_model = df.copy()
-    df_model['cut']     = df_model['cut'].cat.codes
+    df_model['cut']     = df_model['cut'].cat.codes # We convert categoricals into numbers 
     df_model['color']   = df_model['color'].cat.codes
     df_model['clarity'] = df_model['clarity'].cat.codes
 
-    X = df_model[['carat', 'cut', 'color', 'clarity']].values
+    X = df_model[['carat', 'cut', 'color', 'clarity']].values # We define inputs and output
     y = df_model['price'].values
-    X = np.c_[np.ones(X.shape[0]), X]
+    X = np.c_[np.ones(X.shape[0]), X] # Adding a Bias Column
 
-    indices = np.random.permutation(len(X))
+    indices = np.random.permutation(len(X)) # We shuffle the data (originally it was ordered)
     X, y = X[indices], y[indices]
 
-    split = int(0.9 * len(X))
+    split = int(0.9 * len(X)) # We split into train / test
     X_train, X_test = X[:split], X[split:]
     y_train, y_test = y[:split], y[split:]
 
-    theta = np.linalg.inv(X_train.T @ X_train) @ X_train.T @ y_train
+    theta = np.linalg.inv(X_train.T @ X_train) @ X_train.T @ y_train #Linear Equation to get Thetas 
 
-    y_pred = X_test @ theta
+    y_pred = X_test @ theta # We test!
     ss_res = np.sum((y_test - y_pred) ** 2)
     ss_tot = np.sum((y_test - np.mean(y_test)) ** 2)
     r2 = 1 - (ss_res / ss_tot)
