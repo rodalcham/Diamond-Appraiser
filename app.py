@@ -20,7 +20,7 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; }
 
 .title {
     font-family: 'Playfair Display', serif;
-    font-size: 2.6rem;
+    font-size: 4rem;
     color: #e8d5a3;
     letter-spacing: 0.02em;
     margin-bottom: 0;
@@ -62,9 +62,9 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; }
 #  Load & prepare data 
 @st.cache_data
 def load_data():
-    df = sns.load_dataset('diamonds')
+    df = sns.load_dataset('diamonds') #We take the Data from seaborn because the link didn't work
     df = df[['carat', 'cut', 'color', 'clarity', 'price']]
-    df = df.dropna()
+    df = df.dropna() 
     df = df[df['price'] > 0]
     df = df[df['carat'] > 0]
     df['cut']     = pd.Categorical(df['cut'],     categories=['Fair','Good','Very Good','Premium','Ideal'], ordered=True)
@@ -72,7 +72,7 @@ def load_data():
     df['clarity'] = pd.Categorical(df['clarity'], categories=['I1','SI2','SI1','VS2','VS1','VVS2','VVS1','IF'], ordered=True)
     return df
 
-@st.cache_data
+@st.cache_data #Makes the function run only once
 def train_model(df):
     df_model = df.copy()
     df_model['cut']     = df_model['cut'].cat.codes
@@ -113,7 +113,7 @@ st.markdown("### Appraise a Diamond")
 col1, col2 = st.columns(2)
 
 with col1:
-    carat   = st.number_input("Carat", min_value=0.1, max_value=5.0, value=0.5, step=0.01)
+    carat   = st.number_input("Carat", min_value=0.1, max_value=5.1, value=1.0, step=0.1)
     cut     = st.selectbox("Cut", ['Fair', 'Good', 'Very Good', 'Premium', 'Ideal'])
 
 with col2:
