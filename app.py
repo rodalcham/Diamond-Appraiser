@@ -146,9 +146,9 @@ st.markdown("### Price Distribution")
 filter_by = st.selectbox("Filter histogram by", ['None', 'cut', 'color', 'clarity'])
 
 CATEGORY_COLORS = {
-    'cut':     ['#e63946', '#f4a261', '#e9c46a', '#2a9d8f', '#264653'],
-    'color':   ['#e63946', '#f4a261', '#e9c46a', '#2a9d8f', '#264653', '#9b5de5', '#f15bb5'],
-    'clarity': ['#adb5bd', '#e63946', '#f4a261', '#e9c46a', '#2a9d8f', '#264653', '#9b5de5', '#f15bb5'],
+    'cut':     ['#e63946', "#e4904c", '#e9c46a', "#1d832f", "#3FCB49"],
+    'color':   ['#e63946', '#e4904c', '#e9c46a', '#1d832f', '#3FCB49', "#53f4e9", "#3ea9fb"],
+    'clarity': ['#e63946', '#e4904c', '#e9c46a', '#1d832f', '#3FCB49', "#53f4e9", '#3ea9fb', "#002af9"],
 }
 
 fig, ax = plt.subplots(figsize=(10, 4))
