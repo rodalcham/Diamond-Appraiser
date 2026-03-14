@@ -145,24 +145,30 @@ st.markdown("### Price Distribution")
 
 filter_by = st.selectbox("Filter histogram by", ['None', 'cut', 'color', 'clarity'])
 
+CATEGORY_COLORS = {
+    'cut':     ['#e63946', '#f4a261', '#e9c46a', '#2a9d8f', '#264653'],
+    'color':   ['#e63946', '#f4a261', '#e9c46a', '#2a9d8f', '#264653', '#9b5de5', '#f15bb5'],
+    'clarity': ['#adb5bd', '#e63946', '#f4a261', '#e9c46a', '#2a9d8f', '#264653', '#9b5de5', '#f15bb5'],
+}
+
 fig, ax = plt.subplots(figsize=(10, 4))
-fig.patch.set_facecolor("#e0e0e0")
-ax.set_facecolor("#EAEAEA")
+fig.patch.set_facecolor('#ffffff')
+ax.set_facecolor('#f5f5f5')
 
 if filter_by == 'None':
-    ax.hist(df['price'], bins=50, color='e0e0e0', edgecolor='#0e0e0e', linewidth=0.4)
+    ax.hist(df['price'], bins=50, color='#4a90d9', edgecolor='white', linewidth=0.5)
 else:
     categories = df[filter_by].cat.categories
-    colors = plt.cm.YlOrBr(np.linspace(0.2, 0.9, len(categories)))
+    colors = CATEGORY_COLORS[filter_by]
     for cat, col in zip(categories, colors):
         subset = df[df[filter_by] == cat]['price']
-        ax.hist(subset, bins=50, alpha=0.6, label=str(cat), color=col, edgecolor='none')
-    ax.legend(facecolor="#f4f6d0", edgecolor='#333', labelcolor='#f0ece4', fontsize=8)
+        ax.hist(subset, bins=50, alpha=0.75, label=str(cat), color=col, edgecolor='white', linewidth=0.4)
+    ax.legend(facecolor='#ffffff', edgecolor='#cccccc', labelcolor='#333333', fontsize=8)
 
-ax.set_xlabel('Price (USD)', color='#888', fontsize=10)
-ax.set_ylabel('Count', color='#888', fontsize=10)
-ax.tick_params(colors='#666')
+ax.set_xlabel('Price (USD)', color='#333333', fontsize=10)
+ax.set_ylabel('Count', color='#333333', fontsize=10)
+ax.tick_params(colors='#333333')
 for spine in ax.spines.values():
-    spine.set_edgecolor('#2a2a2a')
+    spine.set_edgecolor('#cccccc')
 
 st.pyplot(fig)
