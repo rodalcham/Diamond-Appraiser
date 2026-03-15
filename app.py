@@ -236,8 +236,7 @@ for ax, y_pred_plot, title, r2_val, rmse_val in zip(
     ax.plot([0, max_val], [0, max_val], color='#c9a84c', linewidth=1.5, linestyle='--', label='Perfect fit')
     
     # Mark the predicted price for the entered diamond
-    ax.axvline(x=predicted_price, color='#e63946', linewidth=1.5, linestyle=':', label=f'Your diamond: ${predicted_price:,.0f}')
-    ax.axhline(y=predicted_price, color='#e63946', linewidth=1.5, linestyle=':')
+    ax.axhline(y=predicted_price, color='#e63946', linewidth=1.5, linestyle=':', label=f'Your diamond: ${predicted_price:,.0f}')
 
     # Highlight selected model with gold border
     is_selected = (model == 'Linear Regression' and title == 'Linear Regression') or \
