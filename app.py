@@ -262,7 +262,4 @@ for ax, y_pred_plot, title, r2_val, rmse_val, pred_val in zip(
     ax.legend(facecolor='#ffffff', edgecolor='#cccccc', labelcolor='#333333', fontsize=8)
 
 plt.tight_layout()
-
-count = len(df[df['carat'] <= 1.0])
-st.write(f"{count} diamonds ({count/len(df)*100:.1f}% of dataset)")
 st.pyplot(fig2)
