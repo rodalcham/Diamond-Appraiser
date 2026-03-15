@@ -119,9 +119,6 @@ def train_model(df): # We train Both models now!
     r2_log  = 1 - ss_res_log / ss_tot_log
     rmse_log = np.sqrt(np.mean((y_test - exp_y_pred_log) ** 2))
     
-    st.write("X_means:", X_means)
-    st.write("X_stds:", X_stds)
-    
     return theta, r2, rmse, theta_log, r2_log, rmse_log, y_pred, exp_y_pred_log, y_test, X_means, X_stds
 
 df = load_data()
@@ -134,10 +131,15 @@ st.markdown('<p class="subtitle">Estimate the market value of a diamond using a 
 #  Appraiser Form 
 st.markdown("### Appraise a Diamond")
 
+max_train_carat = float(df['carat'].quantile(0.99))
+
 col1, col2 = st.columns(2)
 
 with col1:
     carat   = st.number_input("Carat", min_value=0.1, max_value=5.1, value=1.0, step=0.1)
+    if carat > max_train_carat:
+        st.warning(f"⚠️ Carat value exceeds 99% of training data (max: {max_train_carat:.1f}). Predictions will be unreliable.")
+
     cut     = st.selectbox("Cut", ['Fair', 'Good', 'Very Good', 'Premium', 'Ideal'])
 
 with col2:
@@ -156,10 +158,6 @@ clarity_code = ['I1', 'SI2', 'SI1', 'VS2', 'VS1', 'VVS2', 'VVS1', 'IF'].index(cl
 x_raw = np.array([carat, cut_code, color_code, clarity_code, carat**2])
 x_norm = (x_raw - X_means) / X_stds
 x_input = np.array([[1, *x_norm]])
-
-st.write("x_raw:", x_raw)
-st.write("x_norm:", x_norm)
-st.write("x_input:", x_input)
 
 if model == 'Linear Regression':
     predicted_price = max(0, float((x_input @ theta).item()))
