@@ -103,15 +103,13 @@ def train_model(df): # We train Both models now!
 
     y_pred_log = X_test @ theta_log  # The log-Linear Model as well
     exp_y_pred_log = np.exp(y_pred_log)  # We return the values to dollar space
-    ss_res_log = np.sum((np.log(y_test) - y_pred_log) ** 2)
-    ss_tot_log = np.sum((np.log(y_test) - np.mean(np.log(y_test))) ** 2)
+    ss_res_log = np.sum((np.log(y_test) - y_pred_log) ** 2) # Converting lo log space to get an accurate comaprison
+    ss_tot_log = np.sum((np.log(y_test) - np.mean(np.log(y_test))) ** 2) # Same
     
     r2 = 1 - (ss_res / ss_tot) # Here we get the r^2 and rmse
     rmse = np.sqrt(np.mean((y_test - y_pred) ** 2))
     r2_log  = 1 - ss_res_log / ss_tot_log
     rmse_log = np.sqrt(np.mean((y_test - exp_y_pred_log) ** 2))
-    st.write("ss_res_log:", ss_res_log)
-    st.write("ss_tot:", ss_tot)
     
     return theta, r2, rmse, theta_log, r2_log, rmse_log, y_pred, exp_y_pred_log, y_test
 
@@ -193,3 +191,47 @@ for spine in ax.spines.values():
     spine.set_edgecolor('#cccccc')
 
 st.pyplot(fig)
+
+
+# Let's compare Linear regression vs Log-Linear Regression
+
+st.markdown('<hr class="divider">', unsafe_allow_html=True)
+st.markdown("### Predicted vs Actual Prices")
+st.caption("Sampled from the test set. A perfect model would follow the diagonal line.")
+
+sample_n = 500
+rng = np.random.default_rng(42)
+idx = rng.choice(len(y_test), size=min(sample_n, len(y_test)), replace=False)
+
+fig2, axes = plt.subplots(1, 2, figsize=(12, 5))
+fig2.patch.set_facecolor('#ffffff')
+
+for ax, y_pred_plot, title, r2_val, rmse_val in zip(
+    axes,
+    [y_pred_lin, exp_y_pred_log],
+    ["Linear Regression", "Log-Linear Regression"],
+    [r2, r2_log],
+    [rmse, rmse_log]
+):
+    ax.set_facecolor('#f5f5f5')
+    ax.scatter(y_test[idx], y_pred_plot[idx], alpha=0.3, s=8, color='#4a90d9')
+
+    # Perfect prediction line
+    max_val = max(y_test.max(), y_pred_plot.max())
+    ax.plot([0, max_val], [0, max_val], color='#c9a84c', linewidth=1.5, linestyle='--', label='Perfect fit')
+
+    # Highlight selected model with gold border
+    is_selected = (model == 'Linear Regression' and title == 'Linear Regression') or \
+                  (model == 'Log-Linear Regression' and title == 'Log-Linear Regression')
+    for spine in ax.spines.values():
+        spine.set_edgecolor('#c9a84c' if is_selected else '#cccccc')
+        spine.set_linewidth(2 if is_selected else 1)
+
+    ax.set_title(f"{title}\nR² = {r2_val:.4f}  |  RMSE ${rmse_val:,.0f}", color='#333333', fontsize=11)
+    ax.set_xlabel('Actual Price (USD)', color='#333333', fontsize=9)
+    ax.set_ylabel('Predicted Price (USD)', color='#333333', fontsize=9)
+    ax.tick_params(colors='#333333')
+    ax.legend(facecolor='#ffffff', edgecolor='#cccccc', labelcolor='#333333', fontsize=8)
+
+plt.tight_layout()
+st.pyplot(fig2)
