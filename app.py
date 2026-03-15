@@ -119,6 +119,9 @@ def train_model(df): # We train Both models now!
     r2_log  = 1 - ss_res_log / ss_tot_log
     rmse_log = np.sqrt(np.mean((y_test - exp_y_pred_log) ** 2))
     
+    st.write("X_means:", X_means)
+    st.write("X_stds:", X_stds)
+    
     return theta, r2, rmse, theta_log, r2_log, rmse_log, y_pred, exp_y_pred_log, y_test, X_means, X_stds
 
 df = load_data()
@@ -153,6 +156,10 @@ clarity_code = ['I1', 'SI2', 'SI1', 'VS2', 'VS1', 'VVS2', 'VVS1', 'IF'].index(cl
 x_raw = np.array([carat, cut_code, color_code, clarity_code, carat**2])
 x_norm = (x_raw - X_means) / X_stds
 x_input = np.array([[1, *x_norm]])
+
+st.write("x_raw:", x_raw)
+st.write("x_norm:", x_norm)
+st.write("x_input:", x_input)
 
 if model == 'Linear Regression':
     predicted_price = max(0, float((x_input @ theta).item()))
