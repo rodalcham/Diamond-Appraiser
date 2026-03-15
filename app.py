@@ -87,6 +87,7 @@ def train_model(df): # We train Both models now!
 
     X = np.c_[np.ones(X.shape[0]), X] # Adding a Bias Column
     
+    np.random.seed(17) # Introducing a random seed for reproducibility
     indices = np.random.permutation(len(X)) # We shuffle the data (originally it was ordered)
     X, y = X[indices], y[indices]
 
@@ -94,11 +95,11 @@ def train_model(df): # We train Both models now!
     X_train, X_test = X[:split], X[split:]
     y_train, y_test = y[:split], y[split:]
 
-    theta = np.linalg.inv(X_train.T @ X_train) @ X_train.T @ y_train #Linear Equation to get Thetas 
+    theta = np.linalg.pinv(X_train.T @ X_train) @ X_train.T @ y_train #Linear Equation to get Thetas 
     
     # Lets train a Log-linear model as well, just for fun
     log_y_train = np.log(y_train) # We change the values int log space
-    theta_log = np.linalg.inv(X_train.T @ X_train) @ X_train.T @ log_y_train
+    theta_log = np.linalg.pinv(X_train.T @ X_train) @ X_train.T @ log_y_train
 
 
     y_pred = X_test @ theta # We test!
