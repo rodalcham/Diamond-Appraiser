@@ -80,7 +80,10 @@ def train_model(df): # We train Both models now!
     df_model['clarity'] = df_model['clarity'].cat.codes
 
     X = df_model[['carat', 'cut', 'color', 'clarity']].values # We define inputs and output
+    X = np.c_[X, X[:, 0]**2]  # add carat squared as a 5th feature, I've heard this might help the model to learn that the relation carat-price is not linear. Carat^2 - Price is closer to lineal
     y = df_model['price'].values
+    
+
 
     X = np.c_[np.ones(X.shape[0]), X] # Adding a Bias Column
     
@@ -137,14 +140,14 @@ with col2:
     
 model = st.selectbox("Model", ['Linear Regression', 'Log-Linear Regression'])
 if model == 'Log-Linear Regression' and carat >= 2.0:
-    st.warning("⚠️ Few diamonds above 2 carats exist in the training data — the log-linear model may be unreliable here.")
+    st.warning("⚠️ Few diamonds above 2 carats exist in the training data, the log-linear model may be unreliable.")
 
 # Encode inputs and run them throught the selected model
 cut_code     = ['Fair', 'Good', 'Very Good', 'Premium', 'Ideal'].index(cut)
 color_code   = ['J', 'I', 'H', 'G', 'F', 'E', 'D'].index(color)
 clarity_code = ['I1', 'SI2', 'SI1', 'VS2', 'VS1', 'VVS2', 'VVS1', 'IF'].index(clarity)
 
-x_input = np.array([[1, carat, cut_code, color_code, clarity_code]])
+x_input = np.array([[1, carat, cut_code, color_code, clarity_code, carat**2]])
 
 if model == 'Linear Regression':
     predicted_price = max(0, float((x_input @ theta).item()))
