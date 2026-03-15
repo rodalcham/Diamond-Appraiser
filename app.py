@@ -81,6 +81,9 @@ def train_model(df): # We train Both models now!
 
     X = df_model[['carat', 'cut', 'color', 'clarity']].values # We define inputs and output
     X = np.c_[X, X[:, 0]**2]  # add carat squared as a 5th feature, I've heard this might help the model to learn that the relation carat-price is not linear. Carat^2 - Price is closer to lineal
+    X_means = X[:, 1:].mean(axis=0) # We want to normalize the input to have mean=0 and std=1, so we calculate mean
+    X_stds  = X[:, 1:].std(axis=0) # And std
+    X[:, 1:] = (X[:, 1:] - X_means) / X_stds # Then we normalize, this should help the model be more reliable in extreme scenarios
     y = df_model['price'].values
     
 
@@ -116,10 +119,10 @@ def train_model(df): # We train Both models now!
     r2_log  = 1 - ss_res_log / ss_tot_log
     rmse_log = np.sqrt(np.mean((y_test - exp_y_pred_log) ** 2))
     
-    return theta, r2, rmse, theta_log, r2_log, rmse_log, y_pred, exp_y_pred_log, y_test
+    return theta, r2, rmse, theta_log, r2_log, rmse_log, y_pred, exp_y_pred_log, y_test, X_means, X_stds
 
 df = load_data()
-theta, r2, rmse, theta_log, r2_log, rmse_log, y_pred, exp_y_pred_log, y_test = train_model(df)
+theta, r2, rmse, theta_log, r2_log, rmse_log, y_pred, exp_y_pred_log, y_test, X_means, X_stds = train_model(df)
 
 #  Header 
 st.markdown('<p style="font-family: \'Playfair Display\', serif; font-size: 3.5rem; color: #e8d5a3; letter-spacing: 0.02em; margin-bottom: 0;">💎 Diamond Appraiser</p>', unsafe_allow_html=True)
@@ -147,7 +150,9 @@ cut_code     = ['Fair', 'Good', 'Very Good', 'Premium', 'Ideal'].index(cut)
 color_code   = ['J', 'I', 'H', 'G', 'F', 'E', 'D'].index(color)
 clarity_code = ['I1', 'SI2', 'SI1', 'VS2', 'VS1', 'VVS2', 'VVS1', 'IF'].index(clarity)
 
-x_input = np.array([[1, carat, cut_code, color_code, clarity_code, carat**2]])
+x_raw = np.array([carat, cut_code, color_code, clarity_code, carat**2])
+x_norm = (x_raw - X_means) / X_stds
+x_input = np.array([[1, *x_norm]])
 
 if model == 'Linear Regression':
     predicted_price = max(0, float((x_input @ theta).item()))
