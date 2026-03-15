@@ -208,7 +208,7 @@ fig2.patch.set_facecolor('#ffffff')
 
 for ax, y_pred_plot, title, r2_val, rmse_val in zip(
     axes,
-    [y_pred_lin, exp_y_pred_log],
+    [y_pred, exp_y_pred_log],
     ["Linear Regression", "Log-Linear Regression"],
     [r2, r2_log],
     [rmse, rmse_log]
