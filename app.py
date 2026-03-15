@@ -141,8 +141,6 @@ st.markdown(f"""
 st.markdown('<hr class="divider">', unsafe_allow_html=True)
 
 #  Histogram 
-st.markdown("### Price Distribution")
-
 filter_by = st.selectbox("Filter histogram by", ['None', 'cut', 'color', 'clarity'])
 
 CATEGORY_COLORS = {
