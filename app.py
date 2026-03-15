@@ -93,7 +93,7 @@ def train_model(df): # We train Both models now!
     theta = np.linalg.inv(X_train.T @ X_train) @ X_train.T @ y_train #Linear Equation to get Thetas 
     
     # Lets train a Log-linear model as well, just for fun
-    log_y_train = np.log(y_train)
+    log_y_train = np.log(y_train) # We change the values int log space
     theta_log = np.linalg.inv(X_train.T @ X_train) @ X_train.T @ log_y_train
 
 
@@ -101,7 +101,7 @@ def train_model(df): # We train Both models now!
     ss_res = np.sum((y_test - y_pred) ** 2)
     ss_tot = np.sum((y_test - np.mean(y_test)) ** 2)
 
-    y_pred_log = np.exp(X_test @ theta_log)# The log-Linear Model as well
+    y_pred_log = np.exp(X_test @ theta_log)# The log-Linear Model as well, we must exponentiate to return the values back to normal prices
     ss_res_log = np.sum((y_test - y_pred_log) ** 2)
     ss_tot_log = np.sum((y_test - np.mean(y_test)) ** 2)
     
