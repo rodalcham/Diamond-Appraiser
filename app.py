@@ -101,22 +101,22 @@ def train_model(df): # We train Both models now!
     ss_res = np.sum((y_test - y_pred) ** 2)
     ss_tot = np.sum((y_test - np.mean(y_test)) ** 2)
 
-    y_pred_log = X_test @ theta_log# The log-Linear Model as well
+    y_pred_log = X_test @ theta_log  # The log-Linear Model as well
+    exp_y_pred_log = np.exp(y_pred_log)  # We return the values to dollar space
     ss_res_log = np.sum((y_test - y_pred_log) ** 2)
     ss_tot_log = np.sum((y_test - np.mean(y_test)) ** 2)
     
     r2 = 1 - (ss_res / ss_tot) # Here we get the r^2 and rmse
     rmse = np.sqrt(np.mean((y_test - y_pred) ** 2))
     r2_log  = 1 - ss_res_log / ss_tot_log
-    exp_y_pred_log = np.exp(y_pred_log)
     rmse_log = np.sqrt(np.mean((y_test - exp_y_pred_log) ** 2))
     st.write("ss_res_log:", ss_res_log)
     st.write("ss_tot:", ss_tot)
     
-    return theta, r2, rmse, theta_log, r2_log, rmse_log, y_pred, y_pred_log, y_test
+    return theta, r2, rmse, theta_log, r2_log, rmse_log, y_pred, exp_y_pred_log, y_test
 
 df = load_data()
-theta, r2, rmse, theta_log, r2_log, rmse_log, y_pred, y_pred_log, y_test = train_model(df)
+theta, r2, rmse, theta_log, r2_log, rmse_log, y_pred, exp_y_pred_log, y_test = train_model(df)
 
 #  Header 
 st.markdown('<p style="font-family: \'Playfair Display\', serif; font-size: 3.5rem; color: #e8d5a3; letter-spacing: 0.02em; margin-bottom: 0;">💎 Diamond Appraiser</p>', unsafe_allow_html=True)
