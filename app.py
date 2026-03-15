@@ -81,9 +81,6 @@ def train_model(df): # We train Both models now!
 
     X = df_model[['carat', 'cut', 'color', 'clarity']].values # We define inputs and output
     y = df_model['price'].values
-    
-    carat_squared = X[:,0] ** 2
-    X = np.c_[X, carat_squared]
 
     X = np.c_[np.ones(X.shape[0]), X] # Adding a Bias Column
     
