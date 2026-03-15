@@ -157,11 +157,14 @@ x_raw = np.array([carat, cut_code, color_code, clarity_code, carat**2])# Normali
 x_norm = (x_raw - X_means) / X_stds
 x_input = np.array([[1, *x_norm]])
 
+pred_linear = max(0, float((x_input @ theta).item())) # We calculate both values so we can use them later on
+pred_log = float(np.exp(x_input @ theta_log).item())
+
 if model == 'Linear Regression': # Checking what model we used to display the right data
-    predicted_price = max(0, float((x_input @ theta).item()))
+    predicted_price = pred_linear
     r2_display, rmse_display = r2, rmse
 else:
-    predicted_price = float(np.exp(x_input @ theta_log).item())
+    predicted_price = pred_log
     r2_display, rmse_display = r2_log, rmse_log
 
 st.markdown(f"""
@@ -220,9 +223,6 @@ idx = rng.choice(len(y_test), size=min(sample_n, len(y_test)), replace=False)
 
 fig2, axes = plt.subplots(1, 2, figsize=(12, 5))
 fig2.patch.set_facecolor('#ffffff')
-
-pred_linear = max(0, float((x_input @ theta).item())) # Lets calculate both predictions, just to plot them
-pred_log = float(np.exp(x_input @ theta_log).item())
 
 for ax, y_pred_plot, title, r2_val, rmse_val, pred_val in zip(
     axes,
