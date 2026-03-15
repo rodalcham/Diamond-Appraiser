@@ -153,11 +153,11 @@ cut_code     = ['Fair', 'Good', 'Very Good', 'Premium', 'Ideal'].index(cut)
 color_code   = ['J', 'I', 'H', 'G', 'F', 'E', 'D'].index(color)
 clarity_code = ['I1', 'SI2', 'SI1', 'VS2', 'VS1', 'VVS2', 'VVS1', 'IF'].index(clarity)
 
-x_raw = np.array([carat, cut_code, color_code, clarity_code, carat**2])
+x_raw = np.array([carat, cut_code, color_code, clarity_code, carat**2])# Normalizing again
 x_norm = (x_raw - X_means) / X_stds
 x_input = np.array([[1, *x_norm]])
 
-if model == 'Linear Regression':
+if model == 'Linear Regression': # Checking what model we used to display the right data
     predicted_price = max(0, float((x_input @ theta).item()))
     r2_display, rmse_display = r2, rmse
 else:
@@ -180,7 +180,7 @@ st.markdown("### Price Distribution")
 
 filter_by = st.selectbox("Filter histogram by", ['None', 'cut', 'color', 'clarity'])
 
-CATEGORY_COLORS = {
+CATEGORY_COLORS = { # Picking some nice colors
     'cut':     ['#e63946', "#e4904c", '#e9c46a', "#1d832f", "#3FCB49"],
     'color':   ['#e63946', '#e4904c', '#e9c46a', '#1d832f', '#3FCB49', "#53f4e9", "#3ea9fb"],
     'clarity': ['#e63946', '#e4904c', '#e9c46a', '#1d832f', '#3FCB49', "#53f4e9", '#3ea9fb', "#002af9"],
