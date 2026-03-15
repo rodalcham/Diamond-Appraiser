@@ -92,8 +92,8 @@ def train_model(df): # As a possible future improvement, we could use log-linear
 
     theta = np.linalg.inv(X_train.T @ X_train) @ X_train.T @ y_train #Linear Equation to get Thetas 
     
-	# Lets train a Log-linear model as well, just for fun
-	log_y_train = np.log(y_train)
+    # Lets train a Log-linear model as well, just for fun
+    log_y_train = np.log(y_train)
     theta_log = np.linalg.inv(X_train.T @ X_train) @ X_train.T @ log_y_train
     y_pred_log = np.exp(X_test @ theta_log)
     ss_res_log = np.sum((y_test - y_pred_log) ** 2)
