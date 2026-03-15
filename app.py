@@ -233,9 +233,9 @@ for ax, y_pred_plot, title, r2_val, rmse_val in zip(
     for spine in ax.spines.values():
         spine.set_edgecolor('#c9a84c' if is_selected else '#cccccc')
         spine.set_linewidth(2 if is_selected else 1)
-        ax.set_xlim(0, max_val)
-        ax.set_ylim(0, max_val)
 
+    ax.set_xlim(0, max_val)
+    ax.set_ylim(0, max_val)
     ax.set_title(f"{title}\nR² = {r2_val:.4f}  |  RMSE ${rmse_val:,.0f}", color='#333333', fontsize=11)
     ax.set_xlabel('Actual Price (USD)', color='#333333', fontsize=9)
     ax.set_ylabel('Predicted Price (USD)', color='#333333', fontsize=9)
