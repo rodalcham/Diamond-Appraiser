@@ -221,12 +221,16 @@ idx = rng.choice(len(y_test), size=min(sample_n, len(y_test)), replace=False)
 fig2, axes = plt.subplots(1, 2, figsize=(12, 5))
 fig2.patch.set_facecolor('#ffffff')
 
-for ax, y_pred_plot, title, r2_val, rmse_val in zip(
+pred_linear = max(0, float((x_input @ theta).item())) # Lets calculate both predictions, just to plot them
+pred_log = float(np.exp(x_input @ theta_log).item())
+
+for ax, y_pred_plot, title, r2_val, rmse_val, pred_val in zip(
     axes,
     [y_pred, exp_y_pred_log],
     ["Linear Regression", "Log-Linear Regression"],
     [r2, r2_log],
-    [rmse, rmse_log]
+    [rmse, rmse_log],
+    [pred_linear, pred_log]
 ):
     ax.set_facecolor('#f5f5f5')
     ax.scatter(y_test[idx], y_pred_plot[idx], alpha=0.3, s=8, color='#4a90d9')
@@ -236,11 +240,13 @@ for ax, y_pred_plot, title, r2_val, rmse_val in zip(
     ax.plot([0, max_val], [0, max_val], color='#c9a84c', linewidth=1.5, linestyle='--', label='Perfect fit')
     
     # Mark the predicted price for the entered diamond
-    ax.axhline(y=predicted_price, color='#e63946', linewidth=1.5, linestyle=':', label=f'Your diamond: ${predicted_price:,.0f}')
+    ax.axhline(y=predicted_price, color='#e63946', linewidth=1.5, linestyle=':', label=f'Your diamond: ${pred_val:,.0f}')
 
     # Highlight selected model with gold border
     is_selected = (model == 'Linear Regression' and title == 'Linear Regression') or \
                   (model == 'Log-Linear Regression' and title == 'Log-Linear Regression')
+    
+
     for spine in ax.spines.values():
         spine.set_edgecolor('#c9a84c' if is_selected else '#cccccc')
         spine.set_linewidth(2 if is_selected else 1)
