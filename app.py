@@ -136,6 +136,8 @@ with col2:
     clarity = st.selectbox("Clarity", ['I1', 'SI2', 'SI1', 'VS2', 'VS1', 'VVS2', 'VVS1', 'IF'])
     
 model = st.selectbox("Model", ['Linear Regression', 'Log-Linear Regression'])
+if model == 'Log-Linear Regression' and carat >= 2.0:
+    st.warning("⚠️ Few diamonds above 2 carats exist in the training data — the log-linear model may be unreliable here.")
 
 # Encode inputs and run them throught the selected model
 cut_code     = ['Fair', 'Good', 'Very Good', 'Premium', 'Ideal'].index(cut)
