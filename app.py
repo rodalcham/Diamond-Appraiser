@@ -73,7 +73,7 @@ def load_data():
     return df
 
 @st.cache_data #Makes the function run only once
-def train_model(df): # As a possible future improvement, we could use log-linear regression for better results, the current version gives negative values for small numbers.
+def train_model(df): # We train Both models now! 
     df_model = df.copy()
     df_model['cut']     = df_model['cut'].cat.codes # We convert categoricals into numbers 
     df_model['color']   = df_model['color'].cat.codes
@@ -95,29 +95,25 @@ def train_model(df): # As a possible future improvement, we could use log-linear
     # Lets train a Log-linear model as well, just for fun
     log_y_train = np.log(y_train)
     theta_log = np.linalg.inv(X_train.T @ X_train) @ X_train.T @ log_y_train
-    y_pred_log = np.exp(X_test @ theta_log)
-    ss_res_log = np.sum((y_test - y_pred_log) ** 2)
 
 
     y_pred = X_test @ theta # We test!
-    ss_res = np.sum((y_test - y_pred_log) ** 2)
-    ss_tot = np.sum((y_test - np.mean(y_test)) ** 2)
-    r2 = 1 - (ss_res / ss_tot)
-    rmse = np.sqrt(np.mean((y_test - y_pred) ** 2))
-
-    y_pred = X_test @ theta_log # The log-Linear Model as well
     ss_res = np.sum((y_test - y_pred) ** 2)
     ss_tot = np.sum((y_test - np.mean(y_test)) ** 2)
+
+    y_pred_log = np.exp(X_test @ theta_log)# The log-Linear Model as well
+    ss_res_log = np.sum((y_test - y_pred_log) ** 2)
+    ss_tot_log = np.sum((y_test - np.mean(y_test)) ** 2)
     
     r2 = 1 - (ss_res / ss_tot) # Here we get the r^2 and rmse
     rmse = np.sqrt(np.mean((y_test - y_pred) ** 2))
-    r2_log  = 1 - ss_res_log / ss_tot
+    r2_log  = 1 - ss_res_log / ss_tot_log
     rmse_log = np.sqrt(np.mean((y_test - y_pred_log) ** 2))
     
-    return theta, r2, rmse, theta_log, r2_log, rmse_log, y_pred, y_pred_log
+    return theta, r2, rmse, theta_log, r2_log, rmse_log, y_pred, y_pred_log, y_test
 
 df = load_data()
-theta, r2, rmse, theta_log, r2_log, rmse_log, y_pred, y_pred_log = train_model(df)
+theta, r2, rmse, theta_log, r2_log, rmse_log, y_pred, y_pred_log, y_test = train_model(df)
 
 #  Header 
 st.markdown('<p style="font-family: \'Playfair Display\', serif; font-size: 3.5rem; color: #e8d5a3; letter-spacing: 0.02em; margin-bottom: 0;">💎 Diamond Appraiser</p>', unsafe_allow_html=True)
