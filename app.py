@@ -134,20 +134,25 @@ with col2:
     
 model = st.selectbox("Model", ['Linear Regression', 'Log-Linear Regression'])
 
-# Encode inputs
+# Encode inputs and run them throught the selected model
 cut_code     = ['Fair', 'Good', 'Very Good', 'Premium', 'Ideal'].index(cut)
 color_code   = ['J', 'I', 'H', 'G', 'F', 'E', 'D'].index(color)
 clarity_code = ['I1', 'SI2', 'SI1', 'VS2', 'VS1', 'VVS2', 'VVS1', 'IF'].index(clarity)
 
 x_input = np.array([[1, carat, cut_code, color_code, clarity_code]])
-predicted_price = float((x_input @ theta).item())
-predicted_price = max(0, predicted_price)
+
+if model == 'Linear Regression':
+    predicted_price = max(0, float((x_input @ theta).item()))
+    r2_display, rmse_display = r2, rmse
+else:
+    predicted_price = float(np.exp(x_input @ theta_log).item())
+    r2_display, rmse_display = r2_log, rmse_log
 
 st.markdown(f"""
 <div class="price-box">
-    <div class="price-label">Estimated Price</div>
+    <div class="price-label">Estimated Price ({model})</div>
     <div class="price-value">${predicted_price:,.0f}</div>
-    <div class="price-label">Model R² {r2:.4f} &nbsp;|&nbsp; RMSE ${rmse:,.0f}</div>
+    <div class="price-label">Model R² {r2_display:.4f} &nbsp;|&nbsp; RMSE ${rmse_display:,.0f}</div>
 </div>
 """, unsafe_allow_html=True)
 
