@@ -108,7 +108,8 @@ def train_model(df): # We train Both models now!
     r2 = 1 - (ss_res / ss_tot) # Here we get the r^2 and rmse
     rmse = np.sqrt(np.mean((y_test - y_pred) ** 2))
     r2_log  = 1 - ss_res_log / ss_tot_log
-    rmse_log = np.sqrt(np.mean((y_test - y_pred_log) ** 2))
+    exp_y_pred_log = np.exp(y_pred_log)
+    rmse_log = np.sqrt(np.mean((y_test - exp_y_pred_log) ** 2))
     st.write("ss_res_log:", ss_res_log)
     st.write("ss_tot:", ss_tot)
     
