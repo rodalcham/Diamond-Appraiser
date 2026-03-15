@@ -136,7 +136,7 @@ max_train_carat = float(df['carat'].quantile(0.95))
 col1, col2 = st.columns(2)
 
 with col1:
-    carat   = st.number_input("Carat", min_value=0.1, max_value=5.1, value=0.5, step=0.1)
+    carat   = st.number_input("Carat", min_value=0.1, max_value=5.1, value=0.8, step=0.1)
 
     cut     = st.selectbox("Cut", ['Fair', 'Good', 'Very Good', 'Premium', 'Ideal'])
 
