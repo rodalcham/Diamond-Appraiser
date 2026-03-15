@@ -232,7 +232,7 @@ for ax, y_pred_plot, title, r2_val, rmse_val in zip(
     ax.scatter(y_test[idx], y_pred_plot[idx], alpha=0.3, s=8, color='#4a90d9')
 
     # Perfect prediction line
-    max_val = min(y_test.max(), y_pred.max(), exp_y_pred_log.max())
+    max_val = min(y_test.max(), y_pred.max(), exp_y_pred_log.max()) # We use min instead of max because Outliers don't allow to visualize the graph otherwise
     ax.plot([0, max_val], [0, max_val], color='#c9a84c', linewidth=1.5, linestyle='--', label='Perfect fit')
 
     # Highlight selected model with gold border
