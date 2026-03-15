@@ -84,7 +84,7 @@ def train_model(df): # We train Both models now!
 
     X = np.c_[np.ones(X.shape[0]), X] # Adding a Bias Column
     
-    np.random.seed(999) # Introducing a random seed for reproducibility
+    np.random.seed(170102) # Introducing a random seed for reproducibility
     indices = np.random.permutation(len(X)) # We shuffle the data (originally it was ordered)
     X, y = X[indices], y[indices]
 
