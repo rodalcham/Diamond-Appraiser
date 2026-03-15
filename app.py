@@ -97,8 +97,6 @@ def train_model(df): # As a possible future improvement, we could use log-linear
     theta_log = np.linalg.inv(X_train.T @ X_train) @ X_train.T @ log_y_train
     y_pred_log = np.exp(X_test @ theta_log)
     ss_res_log = np.sum((y_test - y_pred_log) ** 2)
-    r2_log  = 1 - ss_res_log / ss_tot
-    rmse_log = np.sqrt(np.mean((y_test - y_pred_log) ** 2))
 
 
     y_pred = X_test @ theta # We test!
@@ -110,8 +108,11 @@ def train_model(df): # As a possible future improvement, we could use log-linear
     y_pred = X_test @ theta_log # The log-Linear Model as well
     ss_res = np.sum((y_test - y_pred) ** 2)
     ss_tot = np.sum((y_test - np.mean(y_test)) ** 2)
-    r2 = 1 - (ss_res / ss_tot)
+    
+    r2 = 1 - (ss_res / ss_tot) # Here we get the r^2 and rmse
     rmse = np.sqrt(np.mean((y_test - y_pred) ** 2))
+    r2_log  = 1 - ss_res_log / ss_tot
+    rmse_log = np.sqrt(np.mean((y_test - y_pred_log) ** 2))
     
     return theta, r2, rmse, theta_log, r2_log, rmse_log, y_pred, y_pred_log
 
@@ -135,7 +136,7 @@ with col2:
     color   = st.selectbox("Color", ['J', 'I', 'H', 'G', 'F', 'E', 'D'])
     clarity = st.selectbox("Clarity", ['I1', 'SI2', 'SI1', 'VS2', 'VS1', 'VVS2', 'VVS1', 'IF'])
     
-model = st.selectboc("Model", ['Linear Regression', 'Log-Linear Regression'])
+model = st.selectbox("Model", ['Linear Regression', 'Log-Linear Regression'])
 
 # Encode inputs
 cut_code     = ['Fair', 'Good', 'Very Good', 'Premium', 'Ideal'].index(cut)
