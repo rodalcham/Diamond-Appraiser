@@ -81,8 +81,12 @@ def train_model(df): # We train Both models now!
 
     X = df_model[['carat', 'cut', 'color', 'clarity']].values # We define inputs and output
     y = df_model['price'].values
-    X = np.c_[np.ones(X.shape[0]), X] # Adding a Bias Column
+    
+    carat_squared = X[:,0] ** 2
+    X = np.c_[X, carat_squared]
 
+    X = np.c_[np.ones(X.shape[0]), X] # Adding a Bias Column
+    
     indices = np.random.permutation(len(X)) # We shuffle the data (originally it was ordered)
     X, y = X[indices], y[indices]
 
