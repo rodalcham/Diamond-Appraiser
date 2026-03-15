@@ -103,8 +103,8 @@ def train_model(df): # We train Both models now!
 
     y_pred_log = X_test @ theta_log  # The log-Linear Model as well
     exp_y_pred_log = np.exp(y_pred_log)  # We return the values to dollar space
-    ss_res_log = np.sum((y_test - y_pred_log) ** 2)
-    ss_tot_log = np.sum((y_test - np.mean(y_test)) ** 2)
+    ss_res_log = np.sum((np.log(y_test) - log_y_pred) ** 2)
+    ss_tot_log = np.sum((np.log(y_test) - np.mean(np.log(y_test))) ** 2)
     
     r2 = 1 - (ss_res / ss_tot) # Here we get the r^2 and rmse
     rmse = np.sqrt(np.mean((y_test - y_pred) ** 2))
