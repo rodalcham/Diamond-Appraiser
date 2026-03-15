@@ -79,14 +79,14 @@ def train_model(df): # We train Both models now!
     df_model['color']   = df_model['color'].cat.codes
     df_model['clarity'] = df_model['clarity'].cat.codes
 
-    X = df_model[['carat', 'cut', 'color', 'clarity']].values # We define inputs and output
-    X = np.c_[X, X[:, 0]**2]  # add carat squared as a 5th feature, I've heard this might help the model to learn that the relation carat-price is not linear. Carat^2 - Price is closer to lineal
-    X_means = X[:, 1:].mean(axis=0) # We want to normalize the input to have mean=0 and std=1, so we calculate mean
-    X_stds  = X[:, 1:].std(axis=0) # And std
-    X[:, 1:] = (X[:, 1:] - X_means) / X_stds # Then we normalize, this should help the model be more reliable in extreme scenarios
-    y = df_model['price'].values
+    X = df_model[['carat', 'cut', 'color', 'clarity']].values # We define inputs
     
+    X = np.c_[X, X[:, 0]**2]  # add carat squared as a 5th feature, I've heard this might help the model to learn that the relation carat-price is not linear. Carat^2 - Price is closer to lineal
+    X_means = X.mean(axis=0) # We want to normalize the input to have mean=0 and std=1, so we calculate mean
+    X_stds  = X.std(axis=0) # And std
+    X = (X - X_means) / X_stds # Then we normalize, this should help the model be more reliable in extreme scenarios
 
+    y = df_model['price'].values # Defining Output
 
     X = np.c_[np.ones(X.shape[0]), X] # Adding a Bias Column
     
