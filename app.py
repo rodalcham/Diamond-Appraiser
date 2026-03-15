@@ -101,7 +101,7 @@ def train_model(df): # We train Both models now!
     ss_res = np.sum((y_test - y_pred) ** 2)
     ss_tot = np.sum((y_test - np.mean(y_test)) ** 2)
 
-    y_pred_log = np.exp(X_test @ theta_log)# The log-Linear Model as well, we must exponentiate to return the values back to normal prices
+    y_pred_log = X_test @ theta_log# The log-Linear Model as well, we must exponentiate to return the values back to normal prices
     ss_res_log = np.sum((y_test - y_pred_log) ** 2)
     ss_tot_log = np.sum((y_test - np.mean(y_test)) ** 2)
     
