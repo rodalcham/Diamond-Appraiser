@@ -146,7 +146,9 @@ with col2:
     
 model = st.selectbox("Model", ['Linear Regression', 'Log-Linear Regression'])
 if carat > max_train_carat:
-    st.warning(f"⚠️ Carat value exceeds 95% of training data. Predictions will be unreliable (Use Linear Regression for best results).")
+    st.warning(f"⚠️ Carat value exceeds 95% of training data. Use Linear Regression for best results.")
+elif carat > 1:
+    st.warning(f"⚠️ Carat value exceeds 67.6% of training data. Predictions will be unreliable.")
 
 # Encode inputs and run them throught the selected model
 cut_code     = ['Fair', 'Good', 'Very Good', 'Premium', 'Ideal'].index(cut)
