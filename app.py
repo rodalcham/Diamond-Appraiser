@@ -109,6 +109,8 @@ def train_model(df): # We train Both models now!
     rmse = np.sqrt(np.mean((y_test - y_pred) ** 2))
     r2_log  = 1 - ss_res_log / ss_tot_log
     rmse_log = np.sqrt(np.mean((y_test - y_pred_log) ** 2))
+    st.write("ss_res_log:", ss_res_log)
+    st.write("ss_tot:", ss_tot)
     
     return theta, r2, rmse, theta_log, r2_log, rmse_log, y_pred, y_pred_log, y_test
 
