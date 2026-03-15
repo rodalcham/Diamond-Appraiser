@@ -131,7 +131,7 @@ st.markdown('<p class="subtitle">Estimate the market value of a diamond using a 
 #  Appraiser Form 
 st.markdown("### Appraise a Diamond")
 
-max_train_carat = float(df['carat'].quantile(0.99))
+max_train_carat = float(df['carat'].quantile(0.90))
 
 col1, col2 = st.columns(2)
 
@@ -146,7 +146,7 @@ with col2:
     
 model = st.selectbox("Model", ['Linear Regression', 'Log-Linear Regression'])
 if carat > max_train_carat:
-    st.warning(f"⚠️ Carat value exceeds 99% of training data (max: {max_train_carat:.1f}). Predictions will be unreliable.")
+    st.warning(f"⚠️ Carat value exceeds 90% of training data (max: {max_train_carat:.1f}). Predictions will be unreliable.")
 
 # Encode inputs and run them throught the selected model
 cut_code     = ['Fair', 'Good', 'Very Good', 'Premium', 'Ideal'].index(cut)
